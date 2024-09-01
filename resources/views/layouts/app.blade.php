@@ -8,19 +8,6 @@
 </head>
 
 <body>
-    <header>
-        <nav>
-            <a href="{{ url('/') }}">Home</a>
-            @auth
-                <a href="{{ url('/admin') }}">Admin Panel</a>
-                <form action="{{ route('logout') }}" method="POST" style="display: inline;">
-                    @csrf
-                    <button type="submit">Logout</button>
-                </form>
-            @endauth
-        </nav>
-    </header>
-
     <main>
         @yield('content')
     </main>
