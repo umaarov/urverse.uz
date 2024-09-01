@@ -4,8 +4,8 @@ use App\Http\Controllers\Admin\ArticleController as AdminArticleController;
 use App\Http\Controllers\ArticleController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [ArticleController::class, 'index'])->name('home');
-Route::get('/articles/{article}', [ArticleController::class, 'show'])->name('articles.show');
+Route::get('/', [ArticleController::class, 'index'])->name('articles.index');
+Route::get('/article/{article}', [ArticleController::class, 'show'])->name('articles.show');
 
 // Admin routes
 Route::prefix('admin')->middleware('auth')->group(function () {

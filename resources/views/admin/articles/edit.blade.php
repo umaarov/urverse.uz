@@ -31,7 +31,12 @@
             selector: 'textarea#body',
             plugins: 'code image lists link',
             toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | code | image | link',
-            height: 500
+            height: 500,
+            setup: function(editor) {
+                editor.on('change', function() {
+                    editor.save(); // Save content to the textarea
+                });
+            }
         });
     </script>
 @endsection
