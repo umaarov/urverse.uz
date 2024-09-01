@@ -1,19 +1,21 @@
 <?php
 
-use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\Admin\ArticleController as AdminArticleController;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\ArticleController;
 use Illuminate\Support\Facades\Route;
 
-// Public routes for clients
-Route::get('/', [ArticleController::class, 'index'])->name('articles.index');
-Route::get('/articles/{id}', [ArticleController::class, 'show'])->name('articles.show');
+Route::get('/', [ArticleController::class, 'index'])->name('home');
+Route::get('/articles/{article}', [ArticleController::class, 'show'])->name('articles.show');
 
 // Admin routes
-Route::prefix('admin')->middleware('auth')->group(function() {
+Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('/', [AdminArticleController::class, 'index'])->name('admin.index');
-    Route::resource('articles', AdminArticleController::class)->except(['show']);
-});
+    Route::get('/articles/create', [AdminArticleController::class, 'create'])->name('articles.create');
+    Route::post('/articles', [AdminArticleController::class, 'store'])->name('articles.store');
+    Route::get('/articles/{article}/edit', [AdminArticleController::class, 'edit'])->name('articles.edit');
+    Route::put('/articles/{article}', [AdminArticleController::class, 'update'])->name('articles.update');
+    Route::delete('/articles/{article}', [AdminArticleController::class, 'destroy'])->name('articles.destroy');
 
-// Auth routes
-Auth::routes(['register' => false]); // Disable registration
+    // Optional route for TinyMCE image uploads
+    Route::post('upload', [AdminArticleController::class, 'upload'])->name('upload');
+});

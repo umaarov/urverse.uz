@@ -1,16 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ config('app.name', 'Blog') }}</title>
+    <title>IT Blog</title>
 </head>
 
 <body>
-    <main>
+    <div class="container">
         @yield('content')
-    </main>
+    </div>
+    @yield('scripts')
 </body>
 
 </html>
