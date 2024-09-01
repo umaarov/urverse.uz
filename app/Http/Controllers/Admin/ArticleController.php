@@ -3,23 +3,20 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Services\ArticleService;
+use App\Models\Article;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
 {
-    protected $articleService;
-
-    public function __construct(ArticleService $articleService)
+    public function __construct()
     {
         $this->middleware('auth');
-        $this->articleService = $articleService;
     }
 
     public function index()
     {
-        $articles = $this->articleService->getAllArticles();
+        $articles = Article::all();
         return view('admin.articles.index', compact('articles'));
     }
 
@@ -30,41 +27,38 @@ class ArticleController extends Controller
 
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
+        $request->validate([
             'title' => 'required|string|max:255',
             'body' => 'required',
             'tags' => 'nullable|string',
         ]);
 
-        $this->articleService->createArticle($validatedData);
+        Article::create($request->all());
 
         return redirect()->route('admin.index')->with('success', 'Article created successfully.');
     }
 
-    public function edit($id)
+    public function edit(Article $article)
     {
-        $article = $this->articleService->getArticle($id);
         return view('admin.articles.edit', compact('article'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Article $article)
     {
-        $validatedData = $request->validate([
+        $request->validate([
             'title' => 'required|string|max:255',
             'body' => 'required',
             'tags' => 'nullable|string',
         ]);
 
-        $article = $this->articleService->getArticle($id);
-        $this->articleService->updateArticle($article, $validatedData);
+        $article->update($request->all());
 
         return redirect()->route('admin.index')->with('success', 'Article updated successfully.');
     }
 
-    public function destroy($id)
+    public function destroy(Article $article)
     {
-        $article = $this->articleService->getArticle($id);
-        $this->articleService->deleteArticle($article);
+        $article->delete();
 
         return redirect()->route('admin.index')->with('success', 'Article deleted successfully.');
     }
@@ -72,7 +66,9 @@ class ArticleController extends Controller
     public function upload(Request $request)
     {
         $request->validate(['file' => 'image']);
+
         $path = $request->file('file')->store('public/uploads');
+
         return response()->json(['location' => Storage::url($path)]);
     }
 }
