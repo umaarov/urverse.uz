@@ -40,6 +40,11 @@
                         {{ $article->title }}
                     </a>
                 </h2>
+
+                <p>
+                    {{ \Str::limit(strip_tags($article->body), 300) }}
+                </p>
+
                 <p><strong>Published:</strong> {{ $article->created_at->format('F j, Y') }}</p>
 
                 <p>
@@ -59,16 +64,6 @@
                         @endif
                     @endforeach
                 </p>
-
-                <p>
-                    {{ \Str::limit(strip_tags($article->body), 300) }}
-                </p>
-
-                <div>
-                    <a href="{{ route('articles.show', $article->id) }}">
-                        View Full Article
-                    </a>
-                </div>
 
                 <hr>
             </div>
