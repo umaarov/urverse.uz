@@ -29,7 +29,7 @@ class ArticleController extends Controller
 
         Article::create($request->all());
 
-        return redirect()->route('admin.articles.index')->with('success', 'Article created successfully.');
+        return redirect()->route('admin.index')->with('success', 'Article created successfully.');
     }
 
     public function edit(Article $article)
@@ -47,12 +47,12 @@ class ArticleController extends Controller
 
         $article->update($request->all());
 
-        return redirect()->route('admin.articles.index')->with('success', 'Article updated successfully.');
+        return redirect()->route('admin.index')->with('success', 'Article updated successfully.');
     }
 
     public function destroy(Article $article)
     {
         $article->delete();
-        return redirect()->route('admin.articles.index')->with('success', 'Article deleted successfully.');
+        return redirect()->route('admin.index')->with('success', 'Article deleted successfully.');
     }
 }
