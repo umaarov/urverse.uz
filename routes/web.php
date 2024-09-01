@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [ArticleController::class, 'index'])->name('articles.index');
 Route::get('/article/{article}', [ArticleController::class, 'show'])->name('articles.show');
 
-// Admin routes
 Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('/', [AdminArticleController::class, 'index'])->name('admin.index');
     Route::get('/articles/create', [AdminArticleController::class, 'create'])->name('articles.create');
@@ -16,6 +15,5 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::put('/articles/{article}', [AdminArticleController::class, 'update'])->name('articles.update');
     Route::delete('/articles/{article}', [AdminArticleController::class, 'destroy'])->name('articles.destroy');
 
-    // Optional route for TinyMCE image uploads
     Route::post('upload', [AdminArticleController::class, 'upload'])->name('upload');
 });

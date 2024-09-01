@@ -3,19 +3,16 @@
 @section('content')
     <h1>Admin Panel - Articles</h1>
 
-    <!-- Link to Create New Article -->
     <div>
         <a href="{{ route('articles.create') }}">Create New Article</a>
     </div>
 
-    <!-- Success Message -->
     @if (session('success'))
         <div>
             <strong>Success:</strong> {{ session('success') }}
         </div>
     @endif
 
-    <!-- Articles List -->
     @if ($articles->count())
         @foreach ($articles as $article)
             <div>

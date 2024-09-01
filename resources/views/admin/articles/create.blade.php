@@ -23,7 +23,8 @@
 @endsection
 
 @section('scripts')
-    <script src="https://cdn.tiny.cloud/1/sx36c27rc7thjis4dfkf1mricf1fl7zoff4rqkm4v725q29x/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="https://cdn.tiny.cloud/1/sx36c27rc7thjis4dfkf1mricf1fl7zoff4rqkm4v725q29x/tinymce/6/tinymce.min.js"
+        referrerpolicy="origin"></script>
     <script>
         tinymce.init({
             selector: 'textarea#body',
@@ -32,10 +33,9 @@
             height: 500,
             setup: function(editor) {
                 editor.on('change', function() {
-                    editor.save(); // Save content to the textarea
+                    editor.save();
                 });
             }
         });
-    </script>
     </script>
 @endsection

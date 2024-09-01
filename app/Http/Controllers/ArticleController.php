@@ -11,14 +11,12 @@ class ArticleController extends Controller
     {
         $query = Article::query();
 
-        // Search functionality
         if ($request->has('search')) {
             $search = $request->input('search');
             $query->where('title', 'like', "%{$search}%")
                 ->orWhere('body', 'like', "%{$search}%");
         }
 
-        // Tag filtering
         if ($request->has('tag')) {
             $tag = $request->input('tag');
             $query->where('tags', 'like', "%{$tag}%");

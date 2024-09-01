@@ -4,16 +4,13 @@
     <div>
         <h1>Articles</h1>
 
-        <!-- Search Bar -->
         <form action="{{ route('articles.index') }}" method="GET">
             <input type="text" name="search" placeholder="Search articles..." value="{{ request('search') }}">
             <button type="submit">Search</button>
         </form>
 
-        <!-- Tag Filtering -->
         <div>
             @php
-                // Extract unique, lowercase tags from articles
                 $allTags = $articles
                     ->flatMap(function ($article) {
                         return explode(',', $article->tags);
@@ -50,7 +47,6 @@
                 <p>
                     <strong>Tags:</strong>
                     @php
-                        // Process tags for the current article
                         $tags = explode(',', $article->tags);
                         $tags = array_map('trim', $tags);
                         $tags = array_map('strtolower', $tags);

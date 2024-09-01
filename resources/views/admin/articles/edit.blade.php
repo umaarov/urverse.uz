@@ -34,7 +34,7 @@
             height: 500,
             setup: function(editor) {
                 editor.on('change', function() {
-                    editor.save(); // Save content to the textarea
+                    editor.save();
                 });
             }
         });
