@@ -31,6 +31,11 @@ body {
         color: $secondary-color;
         font-size: 3rem;
         margin-bottom: 10px;
+
+        .special-letter {
+            color: $secondary-color;
+            font-style: italic;
+        }
     }
 
     .search-form {
@@ -64,31 +69,13 @@ body {
             }
         }
     }
-}
 
-.content-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 40px;
-}
-
-.sidebar {
-    flex: 1;
-    max-width: 250px;
-    padding: 20px;
-    background-color: #292929;
-    border-radius: 8px;
-
-    h2 {
-        color: $secondary-color;
-        font-size: 1.8rem;
-        margin-bottom: 15px;
-    }
-
-    .tags {
+    .tags-banner {
+        margin-top: 20px;
         display: flex;
         flex-wrap: wrap;
         gap: 10px;
+        justify-content: center;
 
         .tag {
             background-color: $secondary-color;
@@ -106,8 +93,14 @@ body {
     }
 }
 
+.content-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+}
+
 .articles-list {
-    flex: 2;
+    flex: 1;
     display: grid;
     gap: 40px;
 }
@@ -195,5 +188,22 @@ body {
                 color: $primary-color;
             }
         }
+    }
+}
+
+// Media Queries for Mobile
+@media (max-width: 768px) {
+    .page-header {
+        h1 {
+            font-size: 2rem;
+        }
+    }
+
+    .content-wrapper {
+        flex-direction: column;
+    }
+
+    .tags-banner {
+        margin-bottom: 20px;
     }
 }

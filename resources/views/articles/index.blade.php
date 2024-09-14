@@ -3,36 +3,31 @@
 @section('content')
     <div class="articles-page container">
         <header class="page-header">
-            <h1>Tech Articles</h1>
+            <h1>U<span class="special-letter">R</span>marov's Uni<span class="special-letter">verse</span></h1>
             <form action="{{ route('articles.index') }}" method="GET" class="search-form">
                 <input type="text" name="search" placeholder="Search articles..." value="{{ request('search') }}"
                     aria-label="Search articles">
                 <button type="submit"><i class="fas fa-search"></i></button>
             </form>
+            <div class="tags-banner">
+                @php
+                    $allTags = $articles
+                        ->flatMap(function ($article) {
+                            return explode(',', $article->tags);
+                        })
+                        ->map('trim')
+                        ->map('strtolower')
+                        ->unique()
+                        ->sort()
+                        ->values();
+                @endphp
+                @foreach ($allTags as $tag)
+                    <a href="{{ route('articles.index', ['tag' => $tag]) }}" class="tag">#{{ $tag }}</a>
+                @endforeach
+            </div>
         </header>
 
         <div class="content-wrapper">
-            <aside class="sidebar">
-                <h2>Popular Tags</h2>
-                <div class="tags">
-                    @php
-                        $allTags = $articles
-                            ->flatMap(function ($article) {
-                                return explode(',', $article->tags);
-                            })
-                            ->map('trim')
-                            ->map('strtolower')
-                            ->unique()
-                            ->sort()
-                            ->values();
-                    @endphp
-
-                    @foreach ($allTags as $tag)
-                        <a href="{{ route('articles.index', ['tag' => $tag]) }}" class="tag">#{{ $tag }}</a>
-                    @endforeach
-                </div>
-            </aside>
-
             <main class="articles-list">
                 @forelse ($articles as $article)
                     <article class="card">
