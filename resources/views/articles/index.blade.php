@@ -13,7 +13,7 @@
 
         <div class="content-wrapper">
             <aside class="sidebar">
-                <h2>Tags</h2>
+                <h2>Popular Tags</h2>
                 <div class="tags">
                     @php
                         $allTags = $articles
@@ -40,9 +40,7 @@
                             <h2 class="card-title">
                                 <a href="{{ route('articles.show', $article->id) }}">{{ $article->title }}</a>
                             </h2>
-                            <p class="card-excerpt">
-                                {{ \Str::limit(strip_tags($article->body), 150) }}
-                            </p>
+                            <p class="card-excerpt">{{ \Str::limit(strip_tags($article->body), 150) }}</p>
                             <div class="card-meta">
                                 <span class="published-date">Published: {{ $article->created_at->format('F j, Y') }}</span>
                                 <div class="card-tags">
@@ -59,10 +57,6 @@
                                     @endforeach
                                 </div>
                             </div>
-                        </div>
-                        <div class="card-image">
-                            <img src="{{ $article->image_url ?? 'https://via.placeholder.com/400x200' }}"
-                                alt="{{ $article->title }}">
                         </div>
                     </article>
                 @empty

@@ -22,7 +22,8 @@ class ArticleController extends Controller
             $query->where('tags', 'like', "%{$tag}%");
         }
 
-        $articles = $query->get();
+        $perPage = 10;
+        $articles = $query->paginate($perPage);
 
         return view('articles.index', compact('articles'));
     }

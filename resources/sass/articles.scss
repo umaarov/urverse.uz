@@ -1,68 +1,66 @@
-$primary-color: #2d3436;
-$secondary-color: #0984e3;
-$accent-color: #dfe6e9;
-$background-color: #ffffff;
-$font-family: "Roboto", sans-serif;
+$primary-color: #1e1e1e; // Dark background
+$secondary-color: #00e676; // Neon green for accents
+$text-color: #e0e0e0; // Light gray for text
+$font-family: "Poppins", sans-serif; // Modern and clean font
 
-@mixin flex-center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-@mixin transition($property, $duration: 0.3s, $ease: ease-in-out) {
-    transition: $property $duration $ease;
+@mixin transition($properties) {
+    transition: $properties 0.3s ease;
 }
 
 body {
     font-family: $font-family;
-    background-color: $accent-color;
-    color: $primary-color;
+    background-color: $primary-color;
+    color: $text-color;
+    margin: 0;
+    padding: 0;
 }
 
 .container {
     width: 90%;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 20px 0;
+    padding: 20px;
 }
 
 .page-header {
-    @include flex-center;
-    justify-content: space-between;
-    margin-bottom: 30px;
+    background-color: $primary-color;
+    text-align: center;
+    margin-bottom: 40px;
 
     h1 {
-        font-size: 2.5rem;
         color: $secondary-color;
+        font-size: 3rem;
+        margin-bottom: 10px;
     }
 
     .search-form {
         display: flex;
-        border: 1px solid $secondary-color;
-        border-radius: 5px;
-        overflow: hidden;
+        justify-content: center;
+        margin-top: 20px;
 
         input {
-            padding: 10px 15px;
-            border: none;
+            padding: 10px;
+            border: 1px solid $secondary-color;
+            background: transparent;
+            color: $text-color;
             outline: none;
-            font-size: 1rem;
+            @include transition(border-color);
+
+            &:focus {
+                border-color: $secondary-color;
+            }
         }
 
         button {
             background-color: $secondary-color;
             border: none;
-            padding: 10px 15px;
+            padding: 10px;
             cursor: pointer;
-            color: $background-color;
+            color: $primary-color;
+            font-size: 1.2rem;
 
             &:hover {
-                background-color: darken($secondary-color, 10%);
-            }
-
-            i {
-                font-size: 1rem;
+                background-color: lighten($secondary-color, 10%);
             }
         }
     }
@@ -70,185 +68,132 @@ body {
 
 .content-wrapper {
     display: flex;
-    gap: 30px;
+    flex-wrap: wrap;
+    gap: 40px;
+}
 
-    .sidebar {
-        flex: 1;
-        background-color: $background-color;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+.sidebar {
+    flex: 1;
+    max-width: 250px;
+    padding: 20px;
+    background-color: #292929;
+    border-radius: 8px;
 
-        h2 {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-            color: $primary-color;
-        }
-
-        .tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-
-            .tag {
-                background-color: $secondary-color;
-                color: $background-color;
-                padding: 5px 10px;
-                border-radius: 15px;
-                text-decoration: none;
-                font-size: 0.9rem;
-                @include transition(background-color);
-
-                &:hover {
-                    background-color: darken($secondary-color, 10%);
-                }
-            }
-        }
+    h2 {
+        color: $secondary-color;
+        font-size: 1.8rem;
+        margin-bottom: 15px;
     }
 
-    .articles-list {
-        flex: 3;
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 20px;
+    .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
 
-        .card {
-            background-color: $background-color;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            transition: transform 0.3s;
+        .tag {
+            background-color: $secondary-color;
+            color: $primary-color;
+            padding: 5px 10px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            @include transition(all);
 
             &:hover {
-                transform: translateY(-5px);
-            }
-
-            .card-image {
-                img {
-                    width: 100%;
-                    height: 200px;
-                    object-fit: cover;
-                }
-            }
-
-            .card-content {
-                padding: 15px;
-                flex: 1;
-                display: flex;
-                flex-direction: column;
-
-                .card-title {
-                    font-size: 1.5rem;
-                    margin-bottom: 10px;
-
-                    a {
-                        text-decoration: none;
-                        color: $primary-color;
-                        @include transition(color);
-
-                        &:hover {
-                            color: $secondary-color;
-                        }
-                    }
-                }
-
-                .card-excerpt {
-                    flex: 1;
-                    font-size: 1rem;
-                    color: darken($primary-color, 20%);
-                    margin-bottom: 15px;
-                }
-
-                .card-meta {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    font-size: 0.9rem;
-                    color: darken($primary-color, 40%);
-
-                    .published-date {
-                        font-style: italic;
-                    }
-
-                    .card-tags {
-                        display: flex;
-                        gap: 5px;
-
-                        .tag {
-                            background-color: $accent-color;
-                            color: $primary-color;
-                            padding: 3px 8px;
-                            border-radius: 12px;
-                            text-decoration: none;
-                            font-size: 0.8rem;
-                            @include transition(background-color);
-
-                            &:hover {
-                                background-color: lighten($accent-color, 10%);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        .no-articles {
-            grid-column: 1 / -1;
-            text-align: center;
-            font-size: 1.2rem;
-            color: darken($primary-color, 30%);
-        }
-
-        .pagination-wrapper {
-            grid-column: 1 / -1;
-            display: flex;
-            justify-content: center;
-            margin-top: 30px;
-
-            .pagination {
-                display: flex;
-                list-style: none;
-                gap: 10px;
-
-                li {
-                    a,
-                    span {
-                        padding: 8px 12px;
-                        border: 1px solid $secondary-color;
-                        border-radius: 5px;
-                        text-decoration: none;
-                        color: $secondary-color;
-                        @include transition(background-color, 0.2s);
-
-                        &:hover {
-                            background-color: $secondary-color;
-                            color: $background-color;
-                        }
-
-                        &.active {
-                            background-color: $secondary-color;
-                            color: $background-color;
-                            cursor: default;
-                        }
-                    }
-                }
+                background-color: lighten($secondary-color, 10%);
             }
         }
     }
 }
 
-@media (max-width: 992px) {
-    .content-wrapper {
-        flex-direction: column;
+.articles-list {
+    flex: 2;
+    display: grid;
+    gap: 40px;
+}
 
-        .sidebar {
-            order: 2;
+.card {
+    display: flex;
+    flex-direction: column;
+    background-color: #333;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    @include transition(all);
+
+    &:hover {
+        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    .card-content {
+        padding: 20px;
+
+        h2 {
+            color: $secondary-color;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
         }
 
-        .articles-list {
-            order: 1;
+        .card-excerpt {
+            color: $text-color;
+            margin-bottom: 20px;
+        }
+
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: lighten($text-color, 20%);
+        }
+
+        .card-tags {
+            display: flex;
+            gap: 10px;
+
+            .tag {
+                background-color: #444;
+                color: $secondary-color;
+                padding: 5px 10px;
+                border-radius: 50px;
+                text-decoration: none;
+                font-size: 0.8rem;
+                @include transition(all);
+
+                &:hover {
+                    background-color: lighten($secondary-color, 10%);
+                }
+            }
+        }
+    }
+
+    .card-image {
+        img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+    }
+}
+
+.pagination-wrapper {
+    text-align: center;
+    margin-top: 40px;
+
+    .pagination {
+        display: inline-block;
+
+        a {
+            color: $secondary-color;
+            padding: 8px 16px;
+            text-decoration: none;
+            border: 1px solid $secondary-color;
+            margin: 0 4px;
+            @include transition(all);
+
+            &:hover {
+                background-color: $secondary-color;
+                color: $primary-color;
+            }
         }
     }
 }
