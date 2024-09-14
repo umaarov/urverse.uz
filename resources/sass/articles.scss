@@ -1,7 +1,9 @@
 $primary-color: #1e1e1e; // Dark background
 $secondary-color: #00e676; // Neon green for accents
 $text-color: #e0e0e0; // Light gray for text
-$font-family: "Poppins", sans-serif; // Modern and clean font
+$highlight-color: #ff4081; // Bright pink for special elements
+$font-family: "Poppins", sans-serif;
+$special-font-family: "Cinzel", serif; // Special font for standout text
 
 @mixin transition($properties) {
     transition: $properties 0.3s ease;
@@ -27,14 +29,22 @@ body {
     text-align: center;
     margin-bottom: 40px;
 
-    h1 {
+    .site-title {
+        font-family: $special-font-family;
+        font-size: 3.5rem;
         color: $secondary-color;
-        font-size: 3rem;
-        margin-bottom: 10px;
+        letter-spacing: 2px;
 
         .special-letter {
-            color: $secondary-color;
-            font-style: italic;
+            font-weight: bold;
+            color: $highlight-color;
+            text-decoration: underline;
+        }
+
+        .special-verse {
+            font-weight: bold;
+            color: $highlight-color;
+            text-transform: uppercase;
         }
     }
 
@@ -71,23 +81,56 @@ body {
     }
 
     .tags-banner {
-        margin-top: 20px;
+        margin-top: 30px;
         display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        justify-content: center;
+        flex-direction: column;
+        align-items: center;
 
-        .tag {
-            background-color: $secondary-color;
-            color: $primary-color;
-            padding: 5px 10px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-size: 0.9rem;
-            @include transition(all);
+        .tags-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            max-height: 60px;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+
+            &.expanded {
+                max-height: 200px; // Expand to fit more tags when showing more
+            }
+
+            .tag {
+                background-color: #292929;
+                color: $secondary-color;
+                padding: 8px 15px;
+                border-radius: 50px;
+                text-decoration: none;
+                font-size: 1rem;
+                @include transition(all);
+
+                &:hover {
+                    background-color: lighten($secondary-color, 10%);
+                }
+
+                &.hidden-tag {
+                    display: none;
+                }
+            }
+        }
+
+        .toggle-button {
+            background-color: transparent;
+            border: none;
+            color: $secondary-color;
+            cursor: pointer;
+            padding: 10px;
+            margin-top: 10px;
+            font-size: 1rem;
+            text-decoration: underline;
+            @include transition(color);
 
             &:hover {
-                background-color: lighten($secondary-color, 10%);
+                color: lighten($secondary-color, 20%);
             }
         }
     }
@@ -158,14 +201,6 @@ body {
             }
         }
     }
-
-    .card-image {
-        img {
-            display: block;
-            width: 100%;
-            height: auto;
-        }
-    }
 }
 
 .pagination-wrapper {
@@ -194,16 +229,18 @@ body {
 // Media Queries for Mobile
 @media (max-width: 768px) {
     .page-header {
-        h1 {
-            font-size: 2rem;
+        .site-title {
+            font-size: 2.5rem;
+        }
+    }
+
+    .tags-banner {
+        .tags-list {
+            max-height: 40px; // Adjust height for mobile
         }
     }
 
     .content-wrapper {
         flex-direction: column;
-    }
-
-    .tags-banner {
-        margin-bottom: 20px;
     }
 }

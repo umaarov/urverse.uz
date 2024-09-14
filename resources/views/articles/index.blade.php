@@ -3,12 +3,17 @@
 @section('content')
     <div class="articles-page container">
         <header class="page-header">
-            <h1>U<span class="special-letter">R</span>marov's Uni<span class="special-letter">verse</span></h1>
+            <!-- Updated title with special styling classes -->
+            <h1 class="site-title">
+                <span class="special-letter">U</span>mar<span class="special-letter">o</span>v's Uni<span
+                    class="special-verse">verse</span>
+            </h1>
             <form action="{{ route('articles.index') }}" method="GET" class="search-form">
                 <input type="text" name="search" placeholder="Search articles..." value="{{ request('search') }}"
                     aria-label="Search articles">
                 <button type="submit"><i class="fas fa-search"></i></button>
             </form>
+            <!-- Tags banner with enhanced design and "Show More/Less" functionality -->
             <div class="tags-banner">
                 @php
                     $allTags = $articles
@@ -21,9 +26,12 @@
                         ->sort()
                         ->values();
                 @endphp
-                @foreach ($allTags as $tag)
-                    <a href="{{ route('articles.index', ['tag' => $tag]) }}" class="tag">#{{ $tag }}</a>
-                @endforeach
+                <div class="tags-list">
+                    @foreach ($allTags as $tag)
+                        <a href="{{ route('articles.index', ['tag' => $tag]) }}" class="tag">#{{ $tag }}</a>
+                    @endforeach
+                </div>
+                <button id="toggle-tags" class="toggle-button">Show More</button>
             </div>
         </header>
 
@@ -64,4 +72,36 @@
             </main>
         </div>
     </div>
+
+    @section('scripts')
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const tagsList = document.querySelector('.tags-list');
+                const tags = document.querySelectorAll('.tags-list .tag');
+                const toggleButton = document.getElementById('toggle-tags');
+                const maxVisibleTags = 10;
+
+                if (tags.length > maxVisibleTags) {
+                    for (let i = maxVisibleTags; i < tags.length; i++) {
+                        tags[i].classList.add('hidden-tag');
+                    }
+
+                    toggleButton.style.display = 'inline-block';
+                    toggleButton.addEventListener('click', function() {
+                        tagsList.classList.toggle('expanded');
+
+                        if (tagsList.classList.contains('expanded')) {
+                            toggleButton.textContent = 'Show Less';
+                            tags.forEach(tag => tag.classList.remove('hidden-tag'));
+                        } else {
+                            toggleButton.textContent = 'Show More';
+                            for (let i = maxVisibleTags; i < tags.length; i++) {
+                                tags[i].classList.add('hidden-tag');
+                            }
+                        }
+                    });
+                }
+            });
+        </script>
+    @endsection
 @endsection
