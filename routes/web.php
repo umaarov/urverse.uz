@@ -8,12 +8,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [ArticleController::class, 'index'])->name('articles.index');
 Route::get('/article/{article}', [ArticleController::class, 'show'])->name('articles.show');
 
-Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('login', [LoginController::class, 'login']);
-Route::post('logout', [LoginController::class, 'logout'])->name('logout');
-
-Route::prefix('admin')->middleware('auth')->group(function () {
+Route::domain('admin.urverse.uz')->middleware('auth')->group(function () {
     Route::get('/', [AdminArticleController::class, 'index'])->name('admin.index');
+
+    Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
+    Route::post('login', [LoginController::class, 'login']);
+    Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+
     Route::get('/articles/create', [AdminArticleController::class, 'create'])->name('articles.create');
     Route::post('/articles', [AdminArticleController::class, 'store'])->name('articles.store');
     Route::get('/articles/{article}/edit', [AdminArticleController::class, 'edit'])->name('articles.edit');
